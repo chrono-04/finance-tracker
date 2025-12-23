@@ -34,7 +34,7 @@ function renderFromLocalStorage() {
     const delBtn = document.createElement("button");
     const updateBtn = document.createElement("button");
     const actionTd = document.createElement("td");
-    updateBtn.textContent = "Update";
+    updateBtn.textContent = "Edit";
     delBtn.textContent = "Delete";
     delBtn.dataset.id = id;
     updateBtn.dataset.id = id;
@@ -66,6 +66,18 @@ function clearField() {
 }
 
 function addRecord() {
+  // input validation
+  descInput.value = descInput.value.trim();
+  amountInput.value = amountInput.value.trim();
+  if (
+    descInput.value === "" ||
+    amountInput.value === "" ||
+    dateInput.value === ""
+  ) {
+    alert("Invalid input. Try again");
+    return;
+  }
+
   const data = {
     id: crypto.randomUUID(),
     desc: descInput.value,
