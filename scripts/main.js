@@ -44,11 +44,11 @@ function renderFromLocalStorage() {
     actionTd.appendChild(delBtn);
     table.appendChild(tr);
 
-    delBtn.addEventListener("click", deleteItem);
+    delBtn.addEventListener("click", deleteRecord);
   });
 }
 
-function deleteItem(e) {
+function deleteRecord(e) {
   const tr = e.target.closest("tr");
   const itemId = e.target.dataset.id;
   recordsDatabase = recordsDatabase.filter((item) => {
