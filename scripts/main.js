@@ -100,6 +100,16 @@ function editRecord(e) {
   tr.appendChild(td5);
 
   function saveRecord() {
+    newDesc.value = newDesc.value.trim();
+    newAmount.value = newAmount.value.trim();
+    if (
+      newDesc.value === "" ||
+      newAmount.value === "" ||
+      newDate.value === ""
+    ) {
+      alert("Invalid input. Try again");
+      return;
+    }
     recordsDatabase = recordsDatabase.map((item) => {
       return item.id === itemId
         ? {
