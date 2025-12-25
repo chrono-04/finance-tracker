@@ -81,6 +81,9 @@ function editRecord(e) {
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "Save";
 
+  const cancelBtn = document.createElement("button");
+  cancelBtn.textContent = "Cancel";
+
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   const td3 = document.createElement("td");
@@ -92,6 +95,7 @@ function editRecord(e) {
   td3.appendChild(newCategory);
   td4.appendChild(newDate);
   td5.appendChild(saveBtn);
+  td5.appendChild(cancelBtn);
 
   tr.appendChild(td1);
   tr.appendChild(td2);
@@ -126,6 +130,9 @@ function editRecord(e) {
   }
 
   saveBtn.addEventListener("click", saveRecord);
+  cancelBtn.addEventListener("click", () => {
+    renderFromLocalStorage();
+  });
 }
 
 function deleteRecord(e) {
