@@ -137,17 +137,6 @@ function editRecord(e) {
   });
 }
 
-function deleteRecord(e) {
-  const tr = e.target.closest("tr");
-  const itemId = e.target.dataset.id;
-  recordsDatabase = recordsDatabase.filter((item) => {
-    return item.id !== itemId;
-  });
-  tr.remove();
-  saveToLocalStorage(recordsDatabase);
-  renderFromLocalStorage();
-}
-
 function clearField() {
   descInput.value = "";
   amountInput.value = "";

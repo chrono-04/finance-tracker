@@ -2,8 +2,6 @@ import {
   renderFromLocalStorage,
   saveToLocalStorage,
   clearField,
-} from "./main.js";
-import {
   descInput,
   amountInput,
   categoryInput,
