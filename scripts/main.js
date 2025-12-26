@@ -8,6 +8,7 @@ const categoryInput = document.querySelector(".category-el");
 const dateInput = document.querySelector(".date-input-el");
 const submitBtn = document.querySelector(".submit-btn-el");
 const table = document.querySelector(".table-el");
+const expensesTotal = document.querySelector(".expenses-el");
 
 let recordsDatabase = JSON.parse(
   localStorage.getItem("financial-records") || "[]",
@@ -48,6 +49,8 @@ function renderFromLocalStorage() {
     actionTd.appendChild(delBtn);
     table.appendChild(tr);
 
+    expensesSummary();
+
     delBtn.addEventListener("click", deleteRecord);
     updateBtn.addEventListener("click", editRecord);
   });
@@ -60,6 +63,18 @@ function clearField() {
 }
 
 renderFromLocalStorage();
+
+function expensesSummary() {
+  recordsDatabase = JSON.parse(
+    localStorage.getItem("financial-records") || "[]",
+  );
+
+  const updatedDatabase = recordsDatabase.reduce((acc, currentItem) => {
+    const amount = Number(currentItem.amount);
+    return acc + amount;
+  }, 0);
+  expensesTotal.textContent = updatedDatabase;
+}
 
 submitBtn.addEventListener("click", addRecord);
 
