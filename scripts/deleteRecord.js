@@ -2,16 +2,16 @@ import {
   renderFromLocalStorage,
   saveToLocalStorage,
   recordsDatabase,
-} from "./main.js";
+} from "../scripts/main.js";
 
 function deleteRecord(e) {
   const tr = e.target.closest("tr");
   const itemId = e.target.dataset.id;
-  recordsDatabase = recordsDatabase.filter((item) => {
+  const updatedDatabase = recordsDatabase.filter((item) => {
     return item.id !== itemId;
   });
   tr.remove();
-  saveToLocalStorage(recordsDatabase);
+  saveToLocalStorage(updatedDatabase);
   renderFromLocalStorage();
 }
 
