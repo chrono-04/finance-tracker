@@ -39,6 +39,15 @@ function editRecord(e) {
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
 
+  newDesc.classList.add("modal-input");
+  newAmount.classList.add("modal-input");
+  newCategory.classList.add("modal-input");
+  newDate.classList.add("modal-input");
+  saveBtn.classList.add("modal-btn");
+  cancelBtn.classList.add("modal-btn");
+  saveBtn.classList.add("save-btn");
+  cancelBtn.classList.add("cancel-btn");
+
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   const td3 = document.createElement("td");

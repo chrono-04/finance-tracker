@@ -43,6 +43,10 @@ function renderFromLocalStorage() {
     delBtn.textContent = "Delete";
     delBtn.dataset.id = id;
     updateBtn.dataset.id = id;
+    delBtn.classList.add("modal-btn");
+    updateBtn.classList.add("modal-btn");
+    delBtn.classList.add("del-btn");
+    updateBtn.classList.add("save-btn");
 
     tr.appendChild(actionTd);
     actionTd.appendChild(updateBtn);
