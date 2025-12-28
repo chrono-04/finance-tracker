@@ -1,6 +1,7 @@
 import { addRecord } from "../scripts/addRecord.js";
 import { editRecord } from "../scripts/editRecord.js";
 import { deleteRecord } from "../scripts/deleteRecord.js";
+import { summaryBarChart } from "../scripts/summaryChart.js";
 
 const descInput = document.querySelector(".desc-input-el");
 const amountInput = document.querySelector(".amount-input-el");
@@ -9,6 +10,9 @@ const dateInput = document.querySelector(".date-input-el");
 const submitBtn = document.querySelector(".submit-btn-el");
 const table = document.querySelector(".table-el");
 const expensesTotal = document.querySelector(".expenses-el");
+const chartContainer = document.querySelector(".chart-container");
+let expensesPerMonth = null;
+let expensesAmount = null;
 
 let recordsDatabase = JSON.parse(
   localStorage.getItem("financial-records") || "[]",
@@ -58,6 +62,27 @@ function renderFromLocalStorage() {
     delBtn.addEventListener("click", deleteRecord);
     updateBtn.addEventListener("click", editRecord);
   });
+
+  const expensesTotal = recordsDatabase.reduce((acc, currentItem) => {
+    const date = new Date(currentItem.date);
+    const month = date.toLocaleString("en-US", { month: "long" });
+
+    acc[month] = (acc[month] || 0) + currentItem.amount;
+    return acc;
+  }, {});
+
+  console.log(expensesSummary);
+
+  expensesPerMonth = Object.keys(expensesTotal);
+  expensesAmount = Object.values(expensesTotal);
+
+  console.log(expensesPerMonth);
+  console.log(expensesAmount);
+
+  const expensesChart = document.createElement("canvas");
+  expensesChart.setAttribute("id", "expensesChart");
+  summaryBarChart(expensesChart);
+  chartContainer.appendChild(expensesChart);
 }
 
 function clearField() {
@@ -93,4 +118,6 @@ export {
   dateInput,
   submitBtn,
   table,
+  expensesPerMonth,
+  expensesAmount,
 };
