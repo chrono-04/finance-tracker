@@ -2,7 +2,6 @@ import { addRecord } from "../scripts/addRecord.js";
 import { editRecord } from "../scripts/editRecord.js";
 import { deleteRecord } from "../scripts/deleteRecord.js";
 import { Chart } from "chart.js/auto";
-import sampleData from "../data/sampleData.json" assert { type: "json" };
 
 const descInput = document.querySelector(".desc-input-el");
 const amountInput = document.querySelector(".amount-input-el");
@@ -12,8 +11,6 @@ const submitBtn = document.querySelector(".submit-btn-el");
 const table = document.querySelector(".table-el");
 const expensesTotal = document.querySelector(".expenses-el");
 const chartContainer = document.querySelector(".chart-container");
-let expensesPerMonth = null;
-let expensesAmount = null;
 
 let recordsDatabase = JSON.parse(
   localStorage.getItem("financial-records") || "[]",
@@ -68,19 +65,22 @@ function renderFromLocalStorage() {
     const date = new Date(currentItem.date);
     const month = date.toLocaleString("en-US", { month: "long" });
 
-    acc[month] = (acc[month] || 0) + currentItem.amount;
+    acc[month] = (acc[month] || 0) + Number(currentItem.amount);
     return acc;
   }, {});
+
+  const expensesPerMonth = Object.keys(expensesSummaryChart);
+  const expensesAmount = Object.values(expensesSummaryChart);
 
   function summaryBarChart(ctx) {
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: monthData,
+        labels: expensesPerMonth,
         datasets: [
           {
             label: "Prices",
-            data: amountData,
+            data: expensesAmount,
             borderWidth: 1,
           },
         ],
@@ -96,9 +96,6 @@ function renderFromLocalStorage() {
   }
 
   console.log(expensesSummaryChart);
-
-  expensesPerMonth = Object.keys(expensesSummaryChart);
-  expensesAmount = Object.values(expensesSummaryChart);
 
   console.log(expensesPerMonth);
   console.log(expensesAmount);
@@ -126,13 +123,6 @@ function clearField() {
   amountInput.value = "";
   dateInput.value = "";
 }
-
-function addSampleData() {
-  recordsDatabase.push(...sampleData);
-  saveToLocalStorage(recordsDatabase);
-}
-
-console.log(typeof recordsDatabase);
 
 renderFromLocalStorage();
 
