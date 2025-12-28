@@ -12,6 +12,8 @@ const submitBtn = document.querySelector(".submit-btn-el");
 const table = document.querySelector(".table-el");
 const expensesTotal = document.querySelector(".expenses-el");
 const chartContainer = document.querySelector(".chart-container");
+let expensesPerMonth = null;
+let expensesAmount = null;
 
 let recordsDatabase = JSON.parse(
   localStorage.getItem("financial-records") || "[]",
@@ -62,29 +64,23 @@ function renderFromLocalStorage() {
     updateBtn.addEventListener("click", editRecord);
   });
 
-  const financeChartData = recordsDatabase.reduce((acc, currentItem) => {
+  const expensesSummaryChart = recordsDatabase.reduce((acc, currentItem) => {
     const date = new Date(currentItem.date);
     const month = date.toLocaleString("en-US", { month: "long" });
 
-    acc[month] = (acc[month] || 0) + Number(currentItem.amount);
+    acc[month] = (acc[month] || 0) + currentItem.amount;
     return acc;
   }, {});
-
-  const expensesPerMonth = Object.keys(financeChartData);
-  const expensesAmount = Object.values(financeChartData);
-
-  console.log(expensesPerMonth);
-  console.log(expensesAmount);
 
   function summaryBarChart(ctx) {
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: expensesPerMonth,
+        labels: monthData,
         datasets: [
           {
-            label: "Expenses",
-            data: expensesAmount,
+            label: "Prices",
+            data: amountData,
             borderWidth: 1,
           },
         ],
@@ -98,6 +94,14 @@ function renderFromLocalStorage() {
       },
     });
   }
+
+  console.log(expensesSummaryChart);
+
+  expensesPerMonth = Object.keys(expensesSummaryChart);
+  expensesAmount = Object.values(expensesSummaryChart);
+
+  console.log(expensesPerMonth);
+  console.log(expensesAmount);
 
   const expensesChart = document.createElement("canvas");
   expensesChart.setAttribute("id", "expensesChart");
