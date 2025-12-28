@@ -2,6 +2,7 @@ import { addRecord } from "../scripts/addRecord.js";
 import { editRecord } from "../scripts/editRecord.js";
 import { deleteRecord } from "../scripts/deleteRecord.js";
 import { Chart } from "chart.js/auto";
+import sampleData from "../data/sampleData.json" assert { type: "json" };
 
 const descInput = document.querySelector(".desc-input-el");
 const amountInput = document.querySelector(".amount-input-el");
@@ -104,14 +105,6 @@ function renderFromLocalStorage() {
   chartContainer.appendChild(expensesChart);
 }
 
-function clearField() {
-  descInput.value = "";
-  amountInput.value = "";
-  dateInput.value = "";
-}
-
-renderFromLocalStorage();
-
 function expensesSummary() {
   recordsDatabase = JSON.parse(
     localStorage.getItem("financial-records") || "[]",
@@ -123,6 +116,21 @@ function expensesSummary() {
   }, 0);
   expensesTotal.textContent = updatedDatabase;
 }
+
+function clearField() {
+  descInput.value = "";
+  amountInput.value = "";
+  dateInput.value = "";
+}
+
+function addSampleData() {
+  recordsDatabase.push(...sampleData);
+  saveToLocalStorage(recordsDatabase);
+}
+
+console.log(typeof recordsDatabase);
+
+renderFromLocalStorage();
 
 submitBtn.addEventListener("click", addRecord);
 
