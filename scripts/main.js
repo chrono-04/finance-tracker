@@ -25,6 +25,10 @@ function renderFromLocalStorage() {
     table.removeChild(table.lastChild);
   }
 
+  while (chartContainer.firstChild) {
+    chartContainer.removeChild(chartContainer.firstChild);
+  }
+
   recordsDatabase = JSON.parse(
     localStorage.getItem("financial-records") || "[]",
   );
@@ -60,7 +64,22 @@ function renderFromLocalStorage() {
     delBtn.addEventListener("click", deleteRecord);
     updateBtn.addEventListener("click", editRecord);
   });
+  renderChart();
+}
 
+function expensesSummary() {
+  recordsDatabase = JSON.parse(
+    localStorage.getItem("financial-records") || "[]",
+  );
+
+  const updatedDatabase = recordsDatabase.reduce((acc, currentItem) => {
+    const amount = Number(currentItem.amount);
+    return acc + amount;
+  }, 0);
+  expensesTotal.textContent = updatedDatabase;
+}
+
+function renderChart() {
   const expensesSummaryChart = recordsDatabase.reduce((acc, currentItem) => {
     const date = new Date(currentItem.date);
     const month = date.toLocaleString("en-US", { month: "long" });
@@ -104,18 +123,6 @@ function renderFromLocalStorage() {
   expensesChart.setAttribute("id", "expensesChart");
   summaryBarChart(expensesChart);
   chartContainer.appendChild(expensesChart);
-}
-
-function expensesSummary() {
-  recordsDatabase = JSON.parse(
-    localStorage.getItem("financial-records") || "[]",
-  );
-
-  const updatedDatabase = recordsDatabase.reduce((acc, currentItem) => {
-    const amount = Number(currentItem.amount);
-    return acc + amount;
-  }, 0);
-  expensesTotal.textContent = updatedDatabase;
 }
 
 function clearField() {
