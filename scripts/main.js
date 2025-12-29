@@ -101,6 +101,7 @@ function renderChart() {
             label: "Prices",
             data: expensesAmount,
             borderWidth: 1,
+            backgroundColor: "#B1E5F2",
           },
         ],
       },
@@ -108,6 +109,10 @@ function renderChart() {
         scales: {
           y: {
             beginAtZero: true,
+            ticks: { color: "white" },
+          },
+          x: {
+            ticks: { color: "white" },
           },
         },
       },
