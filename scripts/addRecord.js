@@ -1,38 +1,30 @@
-import {
-  renderFromLocalStorage,
-  saveToLocalStorage,
-  clearField,
-  descInput,
-  amountInput,
-  categoryInput,
-  dateInput,
-  recordsDatabase,
-} from "./main.js";
+import { renderFromLocalStorage, saveToLocalStorage } from "./renderUi.js";
+const recordsDatabase = JSON.parse(
+  localStorage.getItem("financial-records") || "[]",
+);
 
-function addRecord() {
+function addRecord(descEl, amountEl, categoryEl, dateEl) {
   // input validation
-  descInput.value = descInput.value.trim();
-  amountInput.value = amountInput.value.trim();
-  if (
-    descInput.value === "" ||
-    amountInput.value === "" ||
-    dateInput.value === ""
-  ) {
+  descEl.value = descEl.value.trim();
+  amountEl.value = amountEl.value.trim();
+  if (descEl.value === "" || amountEl.value === "" || dateEl.value === "") {
     alert("Invalid input. Try again");
     return;
   }
 
   const data = {
     id: crypto.randomUUID(),
-    desc: descInput.value,
-    amount: amountInput.value,
-    category: categoryInput.value,
-    date: dateInput.value,
+    desc: descEl.value,
+    amount: amountEl.value,
+    category: categoryEl.value,
+    date: dateEl.value,
   };
   recordsDatabase.push(data);
   saveToLocalStorage(recordsDatabase);
   renderFromLocalStorage();
-  clearField();
+  descEl.value = "";
+  amountEl.value = "";
+  dateEl.value = "";
   console.log(recordsDatabase);
 }
 

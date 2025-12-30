@@ -1,8 +1,10 @@
 import {
   renderFromLocalStorage,
   saveToLocalStorage,
-  recordsDatabase,
-} from "../scripts/main.js";
+} from "../scripts/renderUi.js";
+const recordsDatabase = JSON.parse(
+  localStorage.getItem("financial-records") || "[]",
+);
 
 function deleteRecord(e) {
   const tr = e.target.closest("tr");

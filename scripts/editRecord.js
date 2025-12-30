@@ -1,8 +1,7 @@
-import {
-  renderFromLocalStorage,
-  saveToLocalStorage,
-  recordsDatabase,
-} from "./main.js";
+import { renderFromLocalStorage, saveToLocalStorage } from "./renderUi.js";
+const recordsDatabase = JSON.parse(
+  localStorage.getItem("financial-records") || "[]",
+);
 
 function editRecord(e) {
   const itemId = e.target.dataset.id;
