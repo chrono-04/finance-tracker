@@ -23,10 +23,11 @@ function renderChart(chartContainerEl) {
         labels: expensesPerMonth,
         datasets: [
           {
-            label: "Prices",
+            label: "Transactions",
             data: expensesAmount,
             borderWidth: 1,
             backgroundColor: "#B1E5F2",
+            color: "white",
           },
         ],
       },
@@ -38,6 +39,13 @@ function renderChart(chartContainerEl) {
           },
           x: {
             ticks: { color: "white" },
+          },
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: "white",
+            },
           },
         },
       },
