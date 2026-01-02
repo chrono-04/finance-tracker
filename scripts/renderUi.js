@@ -5,6 +5,7 @@ import { editRecord } from "../scripts/editRecord.js";
 const expensesTotal = document.querySelector(".expenses-el");
 const table = document.querySelector(".table-el");
 const chartContainer = document.querySelector(".chart-container");
+const incomeTotal = document.querySelector(".income-el");
 
 let recordsDatabase = JSON.parse(
   localStorage.getItem("financial-records") || "[]",
@@ -14,16 +15,27 @@ function saveToLocalStorage(arr) {
   localStorage.setItem("financial-records", JSON.stringify(arr));
 }
 
-function expensesSummary() {
+function transactionSummary() {
   recordsDatabase = JSON.parse(
     localStorage.getItem("financial-records") || "[]",
   );
 
-  const updatedDatabase = recordsDatabase.reduce((acc, currentItem) => {
-    const amount = Number(currentItem.amount);
-    return acc + amount;
-  }, 0);
-  expensesTotal.textContent = updatedDatabase;
+  const totalExpenses = recordsDatabase
+    .filter((item) => item.type === "Expense")
+    .reduce((acc, currentItem) => {
+      const amount = Number(currentItem.amount);
+      return acc + amount;
+    }, 0);
+
+  const totalIncome = recordsDatabase
+    .filter((item) => item.type === "Income")
+    .reduce((acc, currentItem) => {
+      const amount = Number(currentItem.amount);
+      return acc + amount;
+    }, 0);
+
+  expensesTotal.textContent = totalExpenses;
+  incomeTotal.textContent = totalIncome;
 }
 
 function renderFromLocalStorage() {
@@ -65,7 +77,7 @@ function renderFromLocalStorage() {
     actionTd.appendChild(delBtn);
     table.appendChild(tr);
 
-    expensesSummary();
+    transactionSummary();
 
     delBtn.addEventListener("click", deleteRecord);
     updateBtn.addEventListener("click", editRecord);

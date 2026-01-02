@@ -24,6 +24,13 @@
           <!-- USER INPUT FIELD !-->
           <div class="form-container">
             <div class="input-field-container">
+              <label for="transaction-type">Type</label>
+              <select name="transaction-type" class="transaction-type">
+                <option value="Expense">Expense</option>
+                <option value="Income">Income</option>
+              </select>
+            </div>
+            <div class="input-field-container">
               <label for="desc">Description</label>
               <input type="text" name="desc" class="desc-input-el" />
             </div>
@@ -54,6 +61,7 @@
           <div class="table-container">
             <table class="table-el">
               <tr class="table-head">
+                <th>Type</th>
                 <th>Description</th>
                 <th>Amount</th>
                 <th>Category</th>

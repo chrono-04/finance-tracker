@@ -3,7 +3,7 @@ const recordsDatabase = JSON.parse(
   localStorage.getItem("financial-records") || "[]",
 );
 
-function addRecord(descEl, amountEl, categoryEl, dateEl) {
+function addRecord(transacInput, descEl, amountEl, categoryEl, dateEl) {
   // input validation
   descEl.value = descEl.value.trim();
   amountEl.value = amountEl.value.trim();
@@ -14,6 +14,7 @@ function addRecord(descEl, amountEl, categoryEl, dateEl) {
 
   const data = {
     id: crypto.randomUUID(),
+    type: transacInput.value,
     desc: descEl.value,
     amount: amountEl.value,
     category: categoryEl.value,
