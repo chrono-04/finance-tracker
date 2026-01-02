@@ -43,7 +43,7 @@ body {
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 20px;
-  background-color: #2b2b2b;
+  background-color: #2b2a38;
 }
 
 .dashboard-container {
@@ -52,18 +52,34 @@ body {
   border-radius: 10px;
   padding: 10px;
   display: flex;
-  background-color: #2b2b2b;
   margin-bottom: 20px;
-  color: whitesmoke;
 }
 
-.dashboard-container > p {
-  font-size: 24px;
+.total-expenses-container,
+.total-income-container {
+  display: flex;
+  border: none;
+  background-color: #2b2a38;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.total-expenses-container > p {
+  font-size: 18px;
   font-weight: 700;
   margin: 10px;
 }
 
-.dashboard-container > .expenses-el {
+.total-income-container > p {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 10px;
+}
+
+.total-expenses-container > .expenses-el,
+.income-el {
   margin-left: auto;
 }
 
@@ -71,7 +87,7 @@ body {
   padding: 10px;
   margin: 20px 0;
   display: flex;
-  background-color: #2b2b2b;
+  background-color: #2b2a38;
   border-radius: 20px;
   box-shadow: 2px 2px #959595;
   color: whitesmoke;

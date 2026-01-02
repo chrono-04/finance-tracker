@@ -23,7 +23,7 @@ function renderChart(chartContainerEl) {
         labels: expensesPerMonth,
         datasets: [
           {
-            label: "Transactions",
+            label: "Expenses",
             data: expensesAmount,
             borderWidth: 1,
             backgroundColor: "#B1E5F2",
