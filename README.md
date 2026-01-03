@@ -4,6 +4,6 @@
 
 - [x] Expenses records
 - [x] Chart visualization
-- [ ] Add transaction type
-- [ ] Add income records
-- [ ] Add dashboard summarization
+- [x] Add transaction type
+- [x] Add income records
+- [x] Add dashboard summarization
