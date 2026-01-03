@@ -4,28 +4,31 @@ import { loadFromLocalStorage } from "../scripts/storage.js";
 function renderChart(chartContainerEl) {
   const database = loadFromLocalStorage();
 
-  const expensesSummaryChart = database.reduce((acc, currentItem) => {
-    const date = new Date(currentItem.date);
-    const month = date.toLocaleString("en-US", { month: "long" });
+  const totalExpenses = database
+    .filter((item) => item.type === "Expense")
+    .reduce((acc, currentItem) => {
+      return acc + Number(currentItem.amount);
+    }, 0);
 
-    acc[month] = (acc[month] || 0) + Number(currentItem.amount);
-    return acc;
-  }, {});
+  const totalIncome = database
+    .filter((item) => item.type === "Income")
+    .reduce((acc, currentItem) => {
+      return acc + Number(currentItem.amount);
+    }, 0);
 
-  const expensesPerMonth = Object.keys(expensesSummaryChart);
-  const expensesAmount = Object.values(expensesSummaryChart);
+  console.log(totalExpenses, totalIncome);
 
   function summaryBarChart(ctx) {
     new Chart(ctx, {
-      type: "bar",
+      type: "doughnut",
       data: {
-        labels: expensesPerMonth,
+        labels: ["Expenses", "Income"],
         datasets: [
           {
-            label: "Expenses",
-            data: expensesAmount,
+            label: "Transactions",
+            data: [totalExpenses, totalIncome],
             borderWidth: 1,
-            backgroundColor: "#B1E5F2",
+            backgroundColor: ["#6493EB", "#D54D4D"],
             color: "white",
           },
         ],
@@ -50,11 +53,6 @@ function renderChart(chartContainerEl) {
       },
     });
   }
-
-  console.log(expensesSummaryChart);
-
-  console.log(expensesPerMonth);
-  console.log(expensesAmount);
 
   const expensesChart = document.createElement("canvas");
   expensesChart.setAttribute("id", "expensesChart");
