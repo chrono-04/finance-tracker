@@ -1,7 +1,5 @@
 import { renderFromLocalStorage, saveToLocalStorage } from "./renderUi.js";
-const recordsDatabase = JSON.parse(
-  localStorage.getItem("financial-records") || "[]",
-);
+import { loadFromLocalStorage } from "../scripts/storage.js";
 
 function editRecord(e) {
   const itemId = e.target.dataset.id;
@@ -77,7 +75,9 @@ function editRecord(e) {
       alert("Invalid input. Try again");
       return;
     }
-    const updatedDatabase = recordsDatabase.map((item) => {
+
+    const database = loadFromLocalStorage();
+    const updatedDatabase = database.map((item) => {
       return item.id === itemId
         ? {
             ...item,

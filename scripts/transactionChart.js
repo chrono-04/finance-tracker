@@ -1,11 +1,10 @@
 import { Chart } from "chart.js/auto";
+import { loadFromLocalStorage } from "../scripts/storage.js";
 
 function renderChart(chartContainerEl) {
-  const recordsDatabase = JSON.parse(
-    localStorage.getItem("financial-records") || "[]",
-  );
+  const database = loadFromLocalStorage();
 
-  const expensesSummaryChart = recordsDatabase.reduce((acc, currentItem) => {
+  const expensesSummaryChart = database.reduce((acc, currentItem) => {
     const date = new Date(currentItem.date);
     const month = date.toLocaleString("en-US", { month: "long" });
 

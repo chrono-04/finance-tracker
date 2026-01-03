@@ -2,14 +2,13 @@ import {
   renderFromLocalStorage,
   saveToLocalStorage,
 } from "../scripts/renderUi.js";
-const recordsDatabase = JSON.parse(
-  localStorage.getItem("financial-records") || "[]",
-);
+import { loadFromLocalStorage } from "../scripts/storage.js";
 
 function deleteRecord(e) {
   const tr = e.target.closest("tr");
   const itemId = e.target.dataset.id;
-  const updatedDatabase = recordsDatabase.filter((item) => {
+  const database = loadFromLocalStorage();
+  const updatedDatabase = database.filter((item) => {
     return item.id !== itemId;
   });
   tr.remove();

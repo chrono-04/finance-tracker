@@ -1,33 +1,27 @@
 import { renderChart } from "../scripts/transactionChart.js";
 import { deleteRecord } from "../scripts/deleteRecord.js";
 import { editRecord } from "../scripts/editRecord.js";
+import { loadFromLocalStorage } from "../scripts/storage.js";
 
 const expensesTotal = document.querySelector(".expenses-el");
 const table = document.querySelector(".table-el");
 const chartContainer = document.querySelector(".chart-container");
 const incomeTotal = document.querySelector(".income-el");
 
-let recordsDatabase = JSON.parse(
-  localStorage.getItem("financial-records") || "[]",
-);
-
 function saveToLocalStorage(arr) {
   localStorage.setItem("financial-records", JSON.stringify(arr));
 }
 
 function transactionSummary() {
-  recordsDatabase = JSON.parse(
-    localStorage.getItem("financial-records") || "[]",
-  );
-
-  const totalExpenses = recordsDatabase
+  const database = loadFromLocalStorage();
+  const totalExpenses = database
     .filter((item) => item.type === "Expense")
     .reduce((acc, currentItem) => {
       const amount = Number(currentItem.amount);
       return acc + amount;
     }, 0);
 
-  const totalIncome = recordsDatabase
+  const totalIncome = database
     .filter((item) => item.type === "Income")
     .reduce((acc, currentItem) => {
       const amount = Number(currentItem.amount);
@@ -47,12 +41,10 @@ function renderFromLocalStorage() {
     chartContainer.removeChild(chartContainer.firstChild);
   }
 
-  recordsDatabase = JSON.parse(
-    localStorage.getItem("financial-records") || "[]",
-  );
+  const database = loadFromLocalStorage();
 
   // iterate through the array
-  recordsDatabase.map(({ id, ...item }) => {
+  database.map(({ id, ...item }) => {
     const tr = document.createElement("tr");
     // distribute object values
     Object.values(item).forEach((value) => {

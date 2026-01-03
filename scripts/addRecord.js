@@ -1,7 +1,5 @@
 import { renderFromLocalStorage, saveToLocalStorage } from "./renderUi.js";
-const recordsDatabase = JSON.parse(
-  localStorage.getItem("financial-records") || "[]",
-);
+import { loadFromLocalStorage } from "../scripts/storage.js";
 
 function addRecord(transacInput, descEl, amountEl, categoryEl, dateEl) {
   // input validation
@@ -20,13 +18,15 @@ function addRecord(transacInput, descEl, amountEl, categoryEl, dateEl) {
     category: categoryEl.value,
     date: dateEl.value,
   };
-  recordsDatabase.push(data);
-  saveToLocalStorage(recordsDatabase);
+
+  const database = loadFromLocalStorage();
+  database.push(data);
+  saveToLocalStorage(database);
   renderFromLocalStorage();
   descEl.value = "";
   amountEl.value = "";
   dateEl.value = "";
-  console.log(recordsDatabase);
+  console.log(database);
 }
 
 export { addRecord };
