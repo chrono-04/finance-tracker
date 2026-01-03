@@ -8,6 +8,14 @@ function editRecord(e) {
   while (tr.firstChild) {
     tr.removeChild(tr.firstChild);
   }
+  const newType = document.createElement("select");
+  const typeSelection = ["Expense", "Income"];
+  typeSelection.forEach((item) => {
+    const option = document.createElement("option");
+    option.setAttribute("value", item);
+    option.textContent = item;
+    newType.appendChild(option);
+  });
   const newDesc = document.createElement("input");
   newDesc.setAttribute("placeholder", "Enter new description...");
   const newAmount = document.createElement("input");
@@ -36,6 +44,7 @@ function editRecord(e) {
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
 
+  newType.classList.add("modal-input");
   newDesc.classList.add("modal-input");
   newAmount.classList.add("modal-input");
   newCategory.classList.add("modal-input");
@@ -45,12 +54,14 @@ function editRecord(e) {
   saveBtn.classList.add("save-btn");
   cancelBtn.classList.add("cancel-btn");
 
+  const td0 = document.createElement("td");
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   const td3 = document.createElement("td");
   const td4 = document.createElement("td");
   const td5 = document.createElement("td");
 
+  td0.appendChild(newType);
   td1.appendChild(newDesc);
   td2.appendChild(newAmount);
   td3.appendChild(newCategory);
@@ -58,6 +69,7 @@ function editRecord(e) {
   td5.appendChild(saveBtn);
   td5.appendChild(cancelBtn);
 
+  tr.appendChild(td0);
   tr.appendChild(td1);
   tr.appendChild(td2);
   tr.appendChild(td3);
@@ -81,6 +93,7 @@ function editRecord(e) {
       return item.id === itemId
         ? {
             ...item,
+            type: newType.value,
             desc: newDesc.value,
             amount: newAmount.value,
             category: newCategory.value,
